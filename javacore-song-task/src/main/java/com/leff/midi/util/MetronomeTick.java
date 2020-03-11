@@ -6,6 +6,9 @@ import com.leff.midi.event.meta.TimeSignature;
 /**
  * An event specifically for MidiProcessor to broadcast metronome ticks so that
  * observers need not rely on time conversions or measure tracking
+ *
+ * Событие специально для Мидипроцессора, чтобы транслировать тиканье метронома,
+ * так что наблюдателям не нужно полагаться на преобразование времени или отслеживание измерений
  */
 public class MetronomeTick extends MidiEvent
 {

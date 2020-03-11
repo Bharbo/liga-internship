@@ -12,5 +12,4 @@ public class SongUtils {
     public static int tickToMs(float bpm, int resolution, long amountOfTick) {
         return (int) (((60 * 1000) / (bpm * resolution)) * amountOfTick);
     }
-
 }

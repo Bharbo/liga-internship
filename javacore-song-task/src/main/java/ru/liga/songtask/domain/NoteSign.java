@@ -1,11 +1,6 @@
 package ru.liga.songtask.domain;
 
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 
 /**
  * Created by bshestakov on 13.07.2017.
@@ -120,7 +115,7 @@ public enum NoteSign {
     private final Integer midi;
 
     /**
-     * Частота ноты (физическая величена в Hz)
+     * Частота ноты (физическая величина в Hz)
      */
     private final Double frequency_hz;
 

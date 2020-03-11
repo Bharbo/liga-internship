@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{15} - %msg%n</pattern>
+<!--            <Pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</Pattern>-->
+        </encoder>
+    </appender>
+
+    <!--Ошибка: логи корректно выводятся в консоль, но не в полном объёме записываются в файл-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>midi-analysis.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>midi-analysis.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+
+        <!--Ошибка: логи записываются в тот же файл даже после достижения его веса 10КБ, новые файлы логов не создаются-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10KB</maxFileSize>
+        </triggeringPolicy>
+
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="consoleAppender" />
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<configuration>-->
+<!--    <appender name="STDOUT"-->
+<!--              class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        &lt;!&ndash; классический кодировщик по умолчанию &ndash;&gt;-->
+<!--        <encoder>-->
+<!--            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <appender name="FILE"-->
+<!--              class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>midi-analysis.log</file>-->
+<!--        <rollingPolicy-->
+<!--                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            &lt;!&ndash; Шаблон для имени файла &ndash;&gt;-->
+<!--            <fileNamePattern>midi-analysis.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+
+<!--            &lt;!&ndash; Максимальный размер файлов лога &ndash;&gt;-->
+<!--            <max-size>10KB</max-size>-->
+<!--            &lt;!&ndash; <totalSizeCap>10KB</totalSizeCap>&ndash;&gt;-->
+<!--            -->
+<!--            &lt;!&ndash; Количество файлов логов &ndash;&gt;-->
+<!--            &lt;!&ndash; Почему-то не работает: логи записываются в тот же файл даже после достижения его веса 10КБ &ndash;&gt;-->
+<!--&lt;!&ndash;            <maxHistory>10</maxHistory>&ndash;&gt;-->
+<!--            <max-history>10</max-history>-->
+
+<!--        </rollingPolicy>-->
+<!--        <encoder>-->
+<!--            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--    <root level="debug">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--        <appender-ref ref="FILE" />-->
+<!--    </root>-->
+<!--</configuration>-->

@@ -23,6 +23,7 @@ import com.leff.midi.util.VariableLengthInt;
 
 /**
  * Full Disclosure, SysEx events may not be properly handled by this library.
+ * Полное раскрытие, события SysEx могут быть неправильно обработаны этой библиотекой.
  * 
  */
 public class SystemExclusiveEvent extends MidiEvent

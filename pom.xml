@@ -9,8 +9,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>javacore-final</module>
-        <module>javacore-from-uml</module>
+<!--        <module>javacore-final</module>-->
+<!--        <module>javacore-from-uml</module>-->
         <module>javacore-song-task</module>
     </modules>
 
@@ -53,6 +53,12 @@
             <artifactId>lombok</artifactId>
             <version>1.16.20</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
         </dependency>
     </dependencies>
     <build>

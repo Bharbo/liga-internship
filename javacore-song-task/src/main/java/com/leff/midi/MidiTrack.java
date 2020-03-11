@@ -73,7 +73,7 @@ public class MidiTrack
 
         if(!MidiUtil.bytesEqual(buffer, IDENTIFIER, 0, 4))
         {
-            System.err.println("Track identifier did not match MTrk!");
+            System.err.println("Track identifier did not match MTrk!___Трек- идентификатор не совпадал с МТРК");
             return;
         }
 
@@ -178,7 +178,7 @@ public class MidiTrack
 
         if(mClosed)
         {
-            System.err.println("Error: Cannot add an event to a closed track.");
+            System.err.println("Error: Cannot add an event to a closed track.__не удается добавить событие в закрытую дорожку.");
             return;
         }
 
@@ -199,6 +199,7 @@ public class MidiTrack
         catch(Exception e)
         {
             // methods are not supported - must perform linear search
+            //методы не поддерживаются-должен выполняться линейный поиск
             Iterator<MidiEvent> it = mEvents.iterator();
 
             while(it.hasNext())
@@ -220,6 +221,8 @@ public class MidiTrack
 
         // Set its delta time based on the previous event (or itself if no
         // previous event exists)
+        //Установите его дельта- время на основе предыдущего события
+        // (или самого себя, если никакого предыдущего события не существует)
         if(prev != null)
         {
             newEvent.setDelta(newEvent.getTick() - prev.getTick());
@@ -241,7 +244,7 @@ public class MidiTrack
         {
             if(next != null)
             {
-                throw new IllegalArgumentException("Attempting to insert EndOfTrack before an existing event. Use closeTrack() when finished with MidiTrack.");
+                throw new IllegalArgumentException("Attempting to insert EndOfTrack before an existing event. Use closeTrack() when finished with MidiTrack.____Попытка вставить EndOfTrack перед существующим событием. Используйте closeTrack (), когда закончите с MidiTrack.");
             }
             mClosed = true;
         }

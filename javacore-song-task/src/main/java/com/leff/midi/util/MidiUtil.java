@@ -20,6 +20,7 @@ public class MidiUtil
 {
     /**
      * MIDI Unit Conversions
+     * Блок преобразования миди
      */
     public static long ticksToMs(long ticks, int mpqn, int resolution)
     {
@@ -53,6 +54,7 @@ public class MidiUtil
 
     /**
      * Utility methods for working with bytes and byte buffers
+     * Утилитарные методы работы с байтами и байтовыми буферами
      */
     public static int bytesToInt(byte[] buff, int off, int len)
     {
