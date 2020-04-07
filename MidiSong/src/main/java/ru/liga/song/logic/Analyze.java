@@ -20,45 +20,44 @@ public class Analyze {
     public static void analyze(String path) throws IOException {
         logger.info("Подготовка к анализу ......");
         MidiFile midiFile = new MidiFile(new File(path));
-        if (midiFile.getTracks().isEmpty()) { return; }
-        logging_process(midiFile);
+        if (midiFile.getTracks().isEmpty()) {
+            return;
+        }
+        loggingProcess(midiFile);
     }
 
     //логирование результатов
-    public static List<List<Note>> logging_process(MidiFile midiFile) {
-        List<List<Note>> voiceTracks = new ArrayList<>();
-        List<Note> voice = GetTracks.getVoiceTrack(midiFile);
-        if (voice.size() != 0) { voiceTracks.add(voice); }
-        if (voiceTracks.size() == 0) {
+    public static List<Note> loggingProcess(MidiFile midiFile) {
+
+        List<Note> voiceTrack = GetTracks.getVoiceTrack(midiFile);
+        if (voiceTrack.isEmpty()) {
             logger.info("Дорожки с голосом не найдены");
-            return voiceTracks;
+            return voiceTrack;
         }
-        for (List<Note> voiceTrack : voiceTracks) {
-
-            int bounds = highNote(voiceTrack) - lowNote(voiceTrack);
-            if (bounds == 0) {
-                logger.info("Дорожка пуста");
-            } else {
-                logger.info("Диапазон: " + bounds + " полутона(ов)");
-            }
-
-            logger.info("Количество нот по длительностям:");
-            for (Map.Entry<Integer, Integer> entry : (noteGroupByDuration(voiceTrack, midiFile)).entrySet()) {
-                logger.info(entry.getKey() + " ms: " + entry.getValue());
-            }
-
-            logger.info("Список нот с количеством вхождений:");
-            for (Map.Entry<String, Integer> entry : (noteGroupByName(voiceTrack)).entrySet()) {
-                logger.info(entry.getKey() + ": " + entry.getValue());
-            }
+        int bounds = highNote(voiceTrack) - lowNote(voiceTrack);
+        if (bounds == 0) {
+            logger.info("Дорожка пуста");
+        } else {
+            logger.info("Диапазон: " + bounds + " полутона(ов)");
         }
-        return voiceTracks;
+
+        logger.info("Количество нот по длительностям:");
+        for (Map.Entry<Integer, Integer> entry : (noteGroupByDuration(voiceTrack, midiFile)).entrySet()) {
+            logger.info(entry.getKey() + " ms: " + entry.getValue());
+        }
+
+        logger.info("Список нот с количеством вхождений:");
+        for (Map.Entry<String, Integer> entry : (noteGroupByName(voiceTrack)).entrySet()) {
+            logger.info(entry.getKey() + ": " + entry.getValue());
+        }
+        logger.info("$$$$$$$$$$$$ Анализ завершён $$$$$$$$$$$$");
+        return voiceTrack;
     }
 
     //возвращает мапу <длительность ноты(ms), количество нот с такой длительностью>
-    public static HashMap<Integer, Integer> noteGroupByDuration(List<Note> notes, MidiFile midiFile) {
+    public static Map<Integer, Integer> noteGroupByDuration(List<Note> notes, MidiFile midiFile) {
         logger.trace("Получаем информацию о количестве нот с одинаковой длительностью");
-        HashMap<Integer, Integer> groupByDuration = new HashMap<>();
+        Map<Integer, Integer> groupByDuration = new HashMap<>();
         if (notes != null) {
             List<Integer> list = new ArrayList<>();
             Tempo tempo = getTempo(midiFile);
@@ -76,9 +75,9 @@ public class Analyze {
     }
 
     //возвращает мапу <Имя ноты, количество таких нот>
-    public static HashMap<String, Integer> noteGroupByName(List<Note> notes) {
+    public static Map<String, Integer> noteGroupByName(List<Note> notes) {
         logger.trace("Получаем информацию о группах одинаковых нот");
-        HashMap<String, Integer> groupByName = new HashMap<>();
+        Map<String, Integer> groupByName = new HashMap<>();
         if (notes != null) {
             List<String> nameList = new ArrayList<>();
             for (Note note : notes) {

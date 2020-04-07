@@ -14,7 +14,7 @@ public class GetNoteListForTest {
 
     public static List<List<Note>> getVoiceTracksAsNotesForTests(MidiFile midiFile) {
         return getAllTracksAsNoteListsForTests(midiFile).stream()
-                .filter(GetTracks::NotesBoundsСhecking)
+                .filter(GetTracks::notesBoundsChecking)
                 .collect(Collectors.toList());
     }
 

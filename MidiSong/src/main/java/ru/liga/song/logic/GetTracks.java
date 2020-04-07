@@ -1,6 +1,7 @@
 package ru.liga.song.logic;
 
 import com.leff.midi.MidiFile;
+import com.leff.midi.event.MidiEvent;
 import com.leff.midi.event.meta.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import ru.liga.song.domain.Note;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static ru.liga.song.util.EventsToNotes.eventsToNotes;
@@ -25,8 +27,9 @@ public class GetTracks {
         logger.trace("Получение списка голосовых дорожек в виде List'ов");
         logger.trace("Получена {} голосовых(ая) дорожек(ка)", maybe.size());
         long countOfTextEvents = getCountOfTextEvents(midiFile);
-        List<Long> difference = maybe.stream().map((notes) ->
-                Math.abs((long) notes.size() - countOfTextEvents)).collect(Collectors.toList());
+        List<Long> difference = maybe.stream()
+                .map((notes) -> Math.abs((long) notes.size() - countOfTextEvents))
+                .collect(Collectors.toList());
         if (difference.size() == 0) {
             return Collections.emptyList();
         }
@@ -36,11 +39,11 @@ public class GetTracks {
 
     static List<List<Note>> getVoiceTracksAsNotes(MidiFile midiFile) {
         return getAllTracksAsNoteLists(midiFile).stream()
-                .filter(GetTracks::NotesBoundsСhecking)
+                .filter(GetTracks::notesBoundsChecking)
                 .collect(Collectors.toList());
     }
 
-    public static boolean NotesBoundsСhecking(List<Note> notesOfTrack) {
+    public static boolean notesBoundsChecking(List<Note> notesOfTrack) {
         if (!(notesOfTrack.isEmpty())) {
             for (int i = 0; i + 1 < notesOfTrack.size(); i++) {
                 for (int j = i + 1; j < notesOfTrack.size(); j++) {
